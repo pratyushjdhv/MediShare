@@ -123,41 +123,48 @@ def med_return():
 
 @app.route('/register_pharma', methods=['GET', 'POST'])
 def register_pharma():
-    form = register_pharma_form()
-    if form.validate_on_submit():
-        fname = form.fname.data
-        lname = form.lname.data
-        email = form.email.data
-        pharma = pharmacy.query.filter_by(email=email).first()
-        if pharma:
-            flash("Email already exists", "general")
-            return render_template("register_pharma.html", form=form)
-        password = form.password.data
-        new_user = pharmacy(fname=fname, lname=lname, email=email)
-        new_user.set_pass(password)
-        db.session.add(new_user)
+    form1 = login_user_form()
+    form2 = register_pharma_form()  # Use register_user_form here
+    if form2.validate_on_submit():
+        create_user = pharmacy(
+            pharma_name=form2.pharma_name.data,
+            license_no=form2.license_no.data,
+            email=form2.email.data,
+            password=form2.password.data,
+            pincode=form2.pincode.data,
+            address=form2.address.data
+            )
+        user = pharmacy.query.filter_by(email=create_user.email).first()
+        if user:
+            flash("account already exists", "general")
+            return redirect(url_for("login_pharma"))  # Correct the redirect URL
+        db.session.add(create_user)
         db.session.commit()
-        return redirect(url_for("login_pharma"))
-    return render_template('register_pharma.html', form=form)
+        login_user(create_user)
+        return redirect(url_for("home"))
+    # Pass only register_form to the template
+    return render_template('login_pharma.html', login_form=form1, register_form=form2)
 
 
 @app.route('/login_pharma', methods=['POST', 'GET'])
 def login_pharma():
-    form = login_pharma_form()
-    if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
+    form1 = login_pharma_form()
+    form2 = register_pharma_form()
+    if form1.validate_on_submit():
+        email = form1.email.data
+        password = form1.password.data
         user = pharmacy.query.filter_by(email=email).first()
         if user:
             if user.check_password(password):
-                login_user(user)
+                login_user(user)                
+                flash(f'Pharamcy Account created successfully! You are now logged in as {user.pharma_name} ', category='success')
                 return redirect(url_for("home"))
             else:
-                flash("Wrong password", "general")
-                return redirect(url_for("login_users"))
-        flash("User doesnt exists", "general")
+                flash("Wrong password", "danger")
+                return redirect(url_for("login_pharma"))
+        flash("User doesn't exist", "danger")
         return redirect(url_for("login_pharma"))
-    return render_template('login_pharma.html', form=form)
+    return render_template('login_pharma.html', login_form=form1, register_form=form2)
 
 # mdeicine scheduler
 @app.route('/med_scheduler', methods=['GET', 'POST'])
