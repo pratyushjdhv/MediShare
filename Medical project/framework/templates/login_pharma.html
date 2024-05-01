@@ -48,9 +48,9 @@ Login or Sign Up For Pharmacy
                             <!-- Card back (Sign Up) -->
                             <div class="card-back" >
                                 <div class="center-wrap">
-                                    <div class="section text-center" style="position: relative; top: -1.7cap;">
+                                    <div class="section text-center" style="position: relative; top: -0.8cap;">
                                         <h4 class="mb-3 pb-3" >Sign Up</h4>
-                                        <div style="position: relative; top: -1cap;">
+                                        <div style="position: relative; top: -1.8cap;">
                                             <form action="{{ url_for('register_pharma') }}"  method="POST">
                                                 {{ register_form.csrf_token }}
                                                 {{ register_form.hidden_tag() }}
@@ -82,7 +82,7 @@ Login or Sign Up For Pharmacy
                                                     {{ register_form.address(class="form-style", placeholder="Address") }}                                                
                                                     <i class="input-icon bi bi-person-circle"></i>
                                                 </div> 
-                                                <span style="position: absolute; left: 10cap; bottom: -5.5cap;">
+                                                <span style="position: absolute; left: 10cap; bottom: -4.5cap;">
                                                     <input type="submit" class="btnn mt-4" value="Register">
                                                 </span> 
                                             </form>

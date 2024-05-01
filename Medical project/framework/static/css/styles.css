@@ -128,7 +128,7 @@ display: none;
     padding: 0;
 }
 .form-style {
-  padding: 13px 50px; /* Adjust this padding */
+  padding: 10px 50px; /* Adjust this padding */
   padding-left: 55px;
   height: 40px;
   width: calc(100% - 110px); /* Adjust the width to accommodate the padding */
@@ -163,7 +163,6 @@ display: none;
    transition: all 200ms linear;
 }
 .btnn{  
-  
   border-radius: 4px;
   height: 44px;
   font-size: 13px;
@@ -186,8 +185,6 @@ display: none;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 .bot{  
-  
-
   border-radius: 100px;
   font-size: 13px;
   font-weight: 600;
