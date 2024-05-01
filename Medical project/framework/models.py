@@ -10,6 +10,8 @@ class users(db.Model, UserMixin):
     email = db.Column(db.String(320), nullable=False, unique=True)
     hashed_password = db.Column(db.String(length=65), nullable=False)  
     pincode=db.Column(db.String(6), default='000000')
+    pharmacy_name = db.Column(db.String(65))
+    
     
     @property
     def password(self):

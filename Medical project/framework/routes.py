@@ -178,4 +178,16 @@ def med_scheduler():
     if form.is_valid():
         print("Form is valid")
     return render_template('med_scheduler.html', form=form) 
-    
+
+
+@app.route('/select_medical', methods=['GET', 'POST'])
+@login_required
+def select_medical():
+    # Your logic for handling the form goes here
+    return redirect(url_for("home"))
+
+@app.route('/change_pin', methods=['GET', 'POST'])
+@login_required
+def change_pin():
+    # Your logic for handling the form goes here
+    return redirect(url_for('home'))

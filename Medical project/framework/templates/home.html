@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
+
 {% block title %}
-home page
+Home Page
 {% endblock %}
 {% block content %}
-<h2>homeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</h2>
+<h2>Welcome to the Home Page</h2>
 
-<!--
-<a href="{{ url_for('login_users') }}">Login</a>
-<a href="{{ url_for('register_user') }}">Register</a>
-<a href="{{ url_for('login_pharma') }}">Login pharma</a>
-<a href="{{ url_for('register_pharma') }}">Register pharma</a>
-<a href="{{ url_for('med_return') }}">Medicine Return</a>
--->
+<!-- Form for Selecting a Medical -->
+<form action="{{ url_for('select_medical') }}" method="post">
+    <h3>Select Medical</h3>
+    <!-- Your form fields for selecting a medical go here -->
+    <input type="submit" value="Submit">
+</form>
+
+<!-- Form for Changing Pin Code -->
+<form action="{{ url_for('change_pin') }}" method="post">
+    <h3>Change Pin Code</h3>
+    <!-- Your form fields for changing the pin code go here -->
+    <input type="submit" value="Change Pin">
+</form>
 
 {% endblock %}
