@@ -19,6 +19,10 @@ def load_user(user_id):
 def home():
     return render_template('home.html', current_user=current_user)
 
+@app.route('/pharma_home')
+def pharma_home():
+    return render_template('home.html', current_user=current_user)
+
 @app.route('/test')
 def test():
     return f"Current user: {current_user.username}"
