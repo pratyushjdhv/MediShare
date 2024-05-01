@@ -170,10 +170,12 @@ def login_pharma():
         return redirect(url_for("login_pharma"))
     return render_template('login_pharma.html', login_form=form1, register_form=form2)
 
-# mdeicine scheduler
+# medicine scheduler
 @app.route('/med_scheduler', methods=['GET', 'POST'])
 @login_required
 def med_scheduler():
     form = med_scheduler_form()
+    if form.is_valid():
+        print("Form is valid")
     return render_template('med_scheduler.html', form=form) 
     
