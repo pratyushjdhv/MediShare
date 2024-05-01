@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+medicine scheduler{% endblock %}
+{% block content %}
+<h2>medsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</h2>
+
+<div>
+    <button style="position: fixed; top: 80%; right:45% ; z-index: 15px; padding: 8px;" class="bot" data-bs-toggle="modal" data-bs-target="#scheduler">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor"
+            class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+        </svg>
+    </button>
+</div>
+
+<div class="modal fade" id="scheduler" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog"> <!--modal box-->
+        <div class="modal-content"> <!--modal content-->
+            <div class="modal-header"> <!--modal box-->
+                <h5 class="modal-title" id="modal-title">Add Medicine</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"> <!--modal body-->
+                <form method="POST" action="{{ url_for('med_scheduler') }}">
+                    <div class="mb-3">
+                        {{form.med_name.label}}
+                        {{form.med_name}}
+                        <!--<input type="text" class="form-control" id="med_name" name="med_name" required>-->
+                    </div>
+                    <div class="mb-3">
+                        {{form.dosage.label}}
+                        {{form.dosage}}
+                    </div>
+                    <div class="mb-3">
+                        {{form.frequency.label}}
+                        {{form.frequency}}
+                    </div>
+                    <!--<div class="mb-3">
+                        <label for="med_date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="med_date" name="med_date" required>
+                    </div>
+                -->                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="submit" class="btn btn-primary">Add</button>-->
+                {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+Login or Sign Up
+{% endblock %}
+{% block content %}
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                    <label for="reg-log"></label>
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="pb-3">Log In</h4>
+                                        <form action="{{ url_for('login_users') }}" method="POST">
+                                            {{ form.csrf_token }}
+                                            <div class="form-group">
+                                                {{ form.email.label }}
+                                                {{ form.email(class="form-style", placeholder="Email") }}
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                {{ form.password.label }}
+                                                {{ form.password(class="form-style", placeholder="Password") }}
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <input type="submit" class="btn mt-4" value="Login">
+                                        </form>
+                                        <div class="form-group mt-2">
+                                            <p>Or</p>
+                                            <a href="https://www.web-leb.com/code" class="btn "><i
+                                                    class="fa-brands fa-facebook-f"></i></a>
+                                            <a href="https://www.web-leb.com/code" class="btn "><i
+                                                    class="fa-brands fa-google"></i></a>
+                                            <a href="https://www.web-leb.com/code" class="btn "><i
+                                                    class="fa-brands fa-github"></i></a>
+                                        </div>
+                                        <p class="mb-0 mt-4 text-center"><a href="https://www.web-leb.com/code"
+                                                class="link">Forgot your password?</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card back (Sign Up) -->
+                            <!-- Your sign-up form HTML code goes here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

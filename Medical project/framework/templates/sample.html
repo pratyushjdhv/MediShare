@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+home page
+{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user.fname }}</h1>
+<a href="{{ url_for('login_users') }}">Login</a>
+<a href="{{ url_for('register_user') }}">Register</a>
+<a href="{{ url_for('login_pharma') }}">Login pharma</a>
+<a href="{{ url_for('register_pharma') }}">Register pharma</a>
+<a href="{{ url_for('med_return') }}">Medicine Return</a>
+{% endblock %}
