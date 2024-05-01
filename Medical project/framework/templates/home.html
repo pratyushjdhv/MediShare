@@ -4,20 +4,61 @@
 Home Page
 {% endblock %}
 {% block content %}
+<nav class="navbar navbar-expand-md navbar-dark ">
+    <div class="container">
+        <a class="navbar-brand text" href="{{ url_for('home') }}">MediShare</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <div style="text-align: center;">
+                        <a class="nav-link" style="display: block; color:#87CEFA;"
+                            href="{{ url_for('med_return') }}">
+                            <i class="bi bi-clipboard2-pulse" style="display: block;"></i>
+                            Return Meds
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div style="text-align: center;">
+                        <a class="nav-link" style="display: block; color:#87CEFA;"
+                            href="{{ url_for('med_scheduler') }}">
+                            <i class="bi bi-journal-plus" style="display: block;"></i>
+                            Medicine Scheduler
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            
+            <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post">
+                <div class="input-group">
+                    <input type="text" name="medical" class="form-control" placeholder="Select Medical">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Update</button>
+                    </div>
+                </div>
+            </form>
+            
+            <form class="navbar-form" action="{{ url_for('change_pin') }}" method="post">
+                <div class="input-group">
+                    <input type="text" name="new_pin" class="form-control" placeholder="Change Pin">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Update</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+
+        <div>
+            <!-- Your user authentication logic goes here -->
+        </div>
+    </div>
+</nav>
+
 <h2>Welcome to the Home Page</h2>
-
-<!-- Form for Selecting a Medical -->
-<form action="{{ url_for('select_medical') }}" method="post">
-    <h3>Select Medical</h3>
-    <!-- Your form fields for selecting a medical go here -->
-    <input type="submit" value="Submit">
-</form>
-
-<!-- Form for Changing Pin Code -->
-<form action="{{ url_for('change_pin') }}" method="post">
-    <h3>Change Pin Code</h3>
-    <!-- Your form fields for changing the pin code go here -->
-    <input type="submit" value="Change Pin">
-</form>
-
 {% endblock %}
