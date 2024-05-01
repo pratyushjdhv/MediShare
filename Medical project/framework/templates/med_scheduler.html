@@ -18,30 +18,24 @@ medicine scheduler{% endblock %}
     <div class="modal-dialog"> <!--modal box-->
         <div class="modal-content"> <!--modal content-->
             <div class="modal-header"> <!--modal box-->
-                <h5 class="modal-title" id="modal-title">Add Medicine</h5>
+                <h5 class="modal-title" id="modal-title" style="color: black;">Add Medicine</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"> <!--modal body-->
-                <form method="POST" action="{{ url_for('med_scheduler') }}">
+                <form method="POST" action="{{ url_for('med_scheduler') }}" >
                     <div class="mb-3">
-                        {{form.med_name.label}}
+                        {{form.med_name.label (style="color: black")}}
                         {{form.med_name}}
-                        <!--<input type="text" class="form-control" id="med_name" name="med_name" required>-->
                     </div>
                     <div class="mb-3">
-                        {{form.dosage.label}}
+                        {{form.dosage.label (style="color: black")}}
                         {{form.dosage}}
                     </div>
-                    <div class="mb-3">
-                        {{form.frequency.label}}
+                    <div class="mb-3 form-group">
+                        {{form.frequency.label (style="color: black")}}
                         {{form.frequency}}
                     </div>
-                    <!--<div class="mb-3">
-                        <label for="med_date" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="med_date" name="med_date" required>
-                    </div>
-                -->                    
-                </form>
+                </form>                    
             </div>
             <div class="modal-footer">
                 <!--<button type="submit" class="btn btn-primary">Add</button>-->
