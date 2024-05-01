@@ -6,33 +6,7 @@ Home Page
 {% block content %}
 <nav class="navbar navbar-expand-md navbar-dark ">
     <div class="container">
-        <a class="navbar-brand text" href="{{ url_for('home') }}">MediShare</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <div style="text-align: center;">
-                        <a class="nav-link" style="display: block; color:#87CEFA;"
-                            href="{{ url_for('med_return') }}">
-                            <i class="bi bi-clipboard2-pulse" style="display: block;"></i>
-                            Return Meds
-                        </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <div style="text-align: center;">
-                        <a class="nav-link" style="display: block; color:#87CEFA;"
-                            href="{{ url_for('med_scheduler') }}">
-                            <i class="bi bi-journal-plus" style="display: block;"></i>
-                            Medicine Scheduler
-                        </a>
-                    </div>
-                </li>
-            </ul>
+        
             
             <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post">
                 <div class="input-group">
