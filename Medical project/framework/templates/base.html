@@ -62,9 +62,7 @@
             </div>
 
 
-            <div>
-                {% if current_user.is_authenticated %}
-                <span style="display: flex; align-items: center;">
+            {% if current_user.is_authenticated %}            
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <div style="text-align: center;">
@@ -74,31 +72,27 @@
                             </div>
                         </li>
                     </ul>
-
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <div style="text-align: center;">
-                                <a href="{{ url_for('logout') }}" class="nav-link text"
-                                    style="display: block; color:#87CEFA;">
-                                    <i class="bi bi-box-arrow-right" style="display: block;"></i> Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </span>
-                {% else %}
+                
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <div style="text-align: center;">
-                            <a class="nav-link text" style="display: block; color:#87CEFA;"
-                                href="{{ url_for('login_users') }}">
+                            <a href="{{ url_for('logout') }}" class="nav-link text" style="display: block; color:#87CEFA;">
+                                <i class="bi bi-box-arrow-right" style="display: block;"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <div style="text-align: center;">
+                            <a class="nav-link text" style="display: block; color:#87CEFA;" href="{{ url_for('login_users') }}">
                                 <i class="bi bi-person-fill"></i> Login
                             </a>
                         </div>
                     </li>
                 </ul>
-                {% endif %}
-            </div>
+            {% endif %}
 
         </div>
     </nav>

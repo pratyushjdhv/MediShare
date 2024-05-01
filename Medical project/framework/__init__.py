@@ -48,6 +48,7 @@ def load_user(user_id):
     if pharma_user:        
         return pharma_user
     return None # Return None if user ID is not found
+
 from framework.routes import *
 
 with app.app_context():
