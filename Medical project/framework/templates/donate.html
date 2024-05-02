@@ -5,33 +5,6 @@ Home Page
 {% endblock %}
 {% block content %}
 
-    <div class="container">
-            <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post" >
-                <div class="input-group" >
-                    <input type="text" name="medical" class="form-control" placeholder="Select Medical">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Update</button>
-                    </div>
-                </div>
-            </form>
-            
-            <form class="navbar-form" action="{{ url_for('change_pin') }}" method="post">
-                <div class="input-group">
-                    <input type="text" name="new_pin" class="form-control" placeholder="Change Pin">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Update</button>
-                    </div>
-                </div>
-            </form>
-            
-        </div>
-
-        <div>
-            <!-- Your user authentication logic goes here -->
-        </div>
-    </div>
-
-
 <h2 style="padding-inline: 10px;">Donate medical object</h2>
 
 <form method="POST" action="{{ url_for('donate') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
