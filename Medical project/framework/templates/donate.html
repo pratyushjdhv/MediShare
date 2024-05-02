@@ -5,39 +5,43 @@ Home Page
 {% endblock %}
 {% block content %}
 
-<h2 style="padding-inline: 10px;">Donate medical object</h2>
+<h1 style="padding-inline: 10px; text-align: center; margin-top: 20px;">Donate medical object</h1>
 
-<form method="POST" action="{{ url_for('donate') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }} 
-    <!-- Existing form fi   elds -->
-    <div class="form-group" style="padding-inline: 10px; width: 50%;">
-        <label for="equip_name">Name of equipment:</label>
-        {{ form.equip_name(class="form-control") }}
-        {% for error in form.equip_name.errors %}
-            <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-    </div>
-    <div class="form-group" style="display: flex; flex-flow: row; padding-inline: 10px;">
-        <div>
-            <label for="equip_image">Upload equipment image:</label>
-            {{ form.equip_image(class="form-control-file") }}
-            {% for error in form.equip_image.errors %}
+<div class="box mx-auto text-center" style="margin-top: 30px;height: 400px; ">
+    <form method="POST" action="{{ url_for('donate') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }} 
+        <!-- Existing form fi   elds -->
+        <div class="form-group" style="padding-inline: 10px; width: auto;">
+            <label for="equip_name">Name of equipment:</label>
+            {{ form.equip_name(class="form-control") }}
+            {% for error in form.equip_name.errors %}
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}
         </div>
-        <div>
-            <label for="bill_image">Upload Bill image if available:</label>
-            {{ form.bill_image(class="form-control-file") }}
-            {% for error in form.bill_image.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}
+        <div class="form-group" style="display: flex; flex-direction: column; padding-inline: 10px;">
+            <div style="margin-bottom: 20px;">
+                <label for="equip_image">Upload equipment image:</label>
+                {{ form.equip_image(class="form-control-file") }}
+                {% for error in form.equip_image.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="bill_image">Upload Bill image if available:</label>
+                {{ form.bill_image(class="form-control-file") }}
+                {% for error in form.bill_image.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div style="padding-inline: 10px;">
-        <button type="submit" class="btnn ">Submit</button>
-    </div>
+        <div style="padding-inline: 10px; text-align: center;">
+            <button type="submit" class="btnn ">Submit</button>
+        </div>
+        
+    </form>
+</div>
+
     
-</form>
 
 {% endblock %}

@@ -6,15 +6,15 @@ medicine return
 
 <body class="text-center">
     <h1>Return medicine</h1>
-    <br>
-    <div>
+    
+    <div style="margin-top: 30px; ">
         <div class="box mx-auto text-center" style="height: auto; padding-top: 10px;">
             <form method="POST" action="{{ url_for('med_return') }}" enctype="multipart/form-data"
                 style="font-size:20px;text-align: left;">
                 {{ form.csrf_token }}
                 {{ form.hidden_tag() }}
                 <!-- Existing form fields -->
-                <div class="form-group" style="padding-inline: 10px; justify-content: space-between; width: auto;">
+                <div class="form-group" style="padding-inline: 10px; display: flex; justify-content: space-between; width: auto;">
                     {{ form.prescription_name.label }}
                     {{ form.prescription_name(class="form-control", placeholder="Prescription Name") }}
                     {% for error in form.prescription_name.errors %}
@@ -22,7 +22,7 @@ medicine return
                     {% endfor %}
                 </div>
 
-                <div class="form-group" style="justify-content: space-between; padding-inline: 10px; ">
+                <div class="form-group" style="display: flex; justify-content: space-between; padding-inline: 10px; ">
                     <div style="margin-right: 50px;">
                         <i class="link bi bi-prescription"></i>
                         {{ form.prescription_image.label }}
@@ -31,7 +31,7 @@ medicine return
                         <span class="text-danger">{{ error }}</span>
                         {% endfor %}
                     </div>
-                    <div >
+                    <div style="margin-right: 10px;">
                         <i class="link bi bi-capsule-pill"></i>
                         {{ form.medicine_image.label }}
                         {{ form.medicine_image(class="form-control", placeholder="medicine image") }}
@@ -42,7 +42,7 @@ medicine return
                 </div>
 
                 <!-- Dynamic meds input field -->
-                <div class="form-group" style="padding-inline: 10px; max-height: 200px; overflow-y: auto; ">
+                <div class="form-group" style="padding-inline: 10px; max-height: 180px; overflow-y: auto; ">
                     <div id="medsFields">
                         <label for="meds">Medications 1:</label>
                         <input type="text" name="meds" placeholder="medicine 1"
