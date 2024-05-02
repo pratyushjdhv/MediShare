@@ -21,7 +21,9 @@ def home():
 
 @app.route('/pharma_home')
 def pharma_home():
-    return render_template('home.html', current_user=current_user)
+    print(current_user.get_id())
+    all_request=medicine_request_pool.query.filter_by(pharmaid=current_user.get_id())
+    return render_template('pharma_home.html', current_user=current_user,all_request=all_request)
 
 @app.route('/test')
 def test():
@@ -32,6 +34,36 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
+
+@app.route("/add_points",methods=["POST"])
+def add_points():
+    request_id=request.form.get("request_id")
+    request_points=request.form.get("user_points")
+    current_request=medicine_request_pool.query.get(request_id)
+    current_request.points_given=request_points
+    redirect_url = request.form.get('redirect_url')
+    db.session.commit()
+    return redirect(redirect_url)
+
+@app.route("/reject",methods=["POST"])
+def reject():
+    request_id=request.form.get("request_id")
+    request_reason=request.form.get("rejection_reason")
+    current_request=medicine_request_pool.query.get(request_id)
+    redirect_url = request.form.get('redirect_url')
+    current_request.is_rejected=1
+    current_request.reason=request_reason
+    db.session.commit()
+    return redirect(redirect_url)
+
+@app.route("/approve",methods=["POST"])
+def approve():
+    request_id=request.form.get("request_id")
+    current_request=medicine_request_pool.query.get(request_id)
+    redirect_url = request.form.get('redirect_url')
+    current_request.is_approved=1
+    db.session.commit()
+    return redirect(redirect_url)
 
 
 @app.route('/register_user', methods=['GET', 'POST'])
@@ -145,7 +177,7 @@ def register_pharma():
         db.session.add(create_user)
         db.session.commit()
         login_user(create_user)
-        return redirect(url_for("home"))
+        return redirect(url_for("pharma_home"))
     # Pass only register_form to the template
     return render_template('login_pharma.html', login_form=form1, register_form=form2)
 
@@ -162,7 +194,7 @@ def login_pharma():
             if user.check_password(password):
                 login_user(user)                
                 flash(f'Pharamcy Account created successfully! You are now logged in as {user.pharma_name} ', category='success')
-                return redirect(url_for("home"))
+                return redirect(url_for("pharma_home"))
             else:
                 flash("Wrong password", "danger")
                 return redirect(url_for("login_pharma"))

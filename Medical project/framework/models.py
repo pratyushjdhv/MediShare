@@ -11,7 +11,7 @@ class users(db.Model, UserMixin):
     hashed_password = db.Column(db.String(length=65), nullable=False)  
     pincode=db.Column(db.String(6), default='000000')
     pharmacy_name = db.Column(db.String(65))
-    
+    points = db.Column(db.Integer)
     
     @property
     def password(self):
@@ -74,6 +74,11 @@ class medicine_request_pool(db.Model,UserMixin):
     prescription_name=db.Column(db.String(100))
     pincode=db.Column(db.String(6), default='000000')
     medications = db.Column(db.String(2000))
+    is_rejected = db.Column(db.Boolean, default=False)  # Boolean value to indicate if the request is urgent
+    is_approved = db.Column(db.Boolean, default=False)
+    reason=db.Column(db.String(256),default="Not known")
+    pharmaid = db.Column(db.Integer,default=1)#this should be taken by the user 
+    points_given = db.Column(db.Integer, default=0)#are points assigned?
 
 class meds_scheduler(db.Model):
     id = db.Column(db.Integer, primary_key=True)
