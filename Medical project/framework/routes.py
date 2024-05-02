@@ -44,32 +44,35 @@ def logout():
 
 @app.route("/add_points",methods=["POST"])
 def add_points():
-    request_id=request.form.get("request_id")
-    request_points=request.form.get("user_points")
-    current_request=medicine_request_pool.query.get(request_id)
-    current_request.points_given=request_points
-    redirect_url = request.form.get('redirect_url')
-    db.session.commit()
+    if request.method == 'POST':
+        request_id=request.form.get("request_id")
+        request_points=request.form.get("user_points")
+        current_request=medicine_request_pool.query.get(request_id)
+        current_request.points_given=request_points
+        redirect_url = request.form.get('redirect_url')
+        db.session.commit()
     return redirect(redirect_url)
 
 @app.route("/reject",methods=["POST"])
 def reject():
-    request_id=request.form.get("request_id")
-    request_reason=request.form.get("rejection_reason")
-    current_request=medicine_request_pool.query.get(request_id)
-    redirect_url = request.form.get('redirect_url')
-    current_request.is_rejected=1
-    current_request.reason=request_reason
-    db.session.commit()
+    if request.method == 'POST':
+        request_id=request.form.get("request_id")
+        request_reason=request.form.get("rejection_reason")
+        current_request=medicine_request_pool.query.get(request_id)
+        redirect_url = request.form.get('redirect_url')
+        current_request.is_rejected=1
+        current_request.reason=request_reason
+        db.session.commit()
     return redirect(redirect_url)
 
 @app.route("/approve",methods=["POST"])
 def approve():
-    request_id=request.form.get("request_id")
-    current_request=medicine_request_pool.query.get(request_id)
-    redirect_url = request.form.get('redirect_url')
-    current_request.is_approved=1
-    db.session.commit()
+    if request.method == 'POST':
+        request_id=request.form.get("request_id")
+        current_request=medicine_request_pool.query.get(request_id)
+        redirect_url = request.form.get('redirect_url')
+        current_request.is_approved=1
+        db.session.commit()
     return redirect(redirect_url)
 
 
