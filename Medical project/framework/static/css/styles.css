@@ -204,3 +204,15 @@ display: none;
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
+.box{
+  position: relative;
+  width: 440px;
+  max-width: 100%;
+  height: 500px;
+  position:absolute;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out; 
+  border: 2px solid #ffeba7;
+  border-radius: 10px;
+}

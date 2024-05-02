@@ -6,31 +6,29 @@ Home Page
 {% block content %}
 <nav class="navbar navbar-expand-md navbar-dark ">
     <div class="container">
-        
-            
-            <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post">
-                <div class="input-group">
-                    <input type="text" name="medical" class="form-control" placeholder="Select Medical">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Update</button>
-                    </div>
+        <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post">
+            <div class="input-group">
+                <input type="text" name="medical" class="form-control" placeholder="Select Medical">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Update</button>
                 </div>
-            </form>
-            
-            <form class="navbar-form" action="{{ url_for('change_pin') }}" method="post">
-                <div class="input-group">
-                    <input type="text" name="new_pin" class="form-control" placeholder="Change Pin">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Update</button>
-                    </div>
-                </div>
-            </form>
-            
-        </div>
+            </div>
+        </form>
 
-        <div>
-            <!-- Your user authentication logic goes here -->
-        </div>
+        <form class="navbar-form" action="{{ url_for('change_pin') }}" method="post">
+            <div class="input-group">
+                <input type="text" name="new_pin" class="form-control" placeholder="Change Pin">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+        <!-- Your user authentication logic goes here -->
+    </div>
     </div>
 </nav>
 
