@@ -6,7 +6,7 @@ Home Page
 {% block content %}
 <nav class="navbar navbar-expand-md navbar-dark ">
     <div class="container">
-        <form class="navbar-form" action="{{ url_for('select_medical') }}" method="post">
+        <form class="navbar-form" action="{{ url_for('select_pharma') }}" method="post">
             <div class="input-group">
                 <input type="text" name="medical" class="form-control" placeholder="Select Medical">
                 <div class="input-group-btn">
@@ -15,13 +15,16 @@ Home Page
             </div>
         </form>
 
-        <form class="navbar-form" action="{{ url_for('change_pin') }}" method="post">
+        <form class="navbar-form" action="{{ url_for('change_pincode') }}" method="post">
             <div class="input-group">
-                <input type="text" name="new_pin" class="form-control" placeholder="Change Pin">
+                <input type="text" name="new_pincode" class="form-control" placeholder="Change Pin value="{{ user.pincode }}">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit">Update</button>
                 </div>
             </div>
+            <input type="text" name="new_pincode" placeholder="New Pincode" value="{{ user.pincode }}">
+            <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
+            <button type="submit">Change</button>
         </form>
 
     </div>

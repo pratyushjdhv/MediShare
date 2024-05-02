@@ -17,7 +17,9 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', current_user=current_user)
+    pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
+    return render_template('home.html', user=current_user,pharmacies=pharmacies)
+    
 
 @app.route('/donate',methods=["POST","GET"])
 def donate():
@@ -53,7 +55,7 @@ def donate():
         equip_image_path = os.path.join(EQU_UPLOAD_FOLDER, img_name1)
         equip_image.save(equip_image_path)
         flash("This is done", "success")
-    return render_template('donate.html', form=form)
+    return render_template('donate.html', form=form,user=current_user)
 
 @app.route('/pharma_home')
 def pharma_home():
@@ -87,28 +89,7 @@ def add_points():
         db.session.commit()
     return redirect(redirect_url)
 
-@app.route("/change_pincode",methods=["POST"])
-def change_pincode():
-    if request.method == 'POST':
-        pincode=request.form.get("new_pincode")
-        current_user.pincode=pincode
-        redirect_url = request.form.get('redirect_url')
-        db.session.commit()
-    return redirect(redirect_url)
 
-@app.route("/select_pharma",methods=["POST","GET"])
-def select_pharma():
-    if request.method == 'POST':
-        id=request.form.get("selected_pharmacy")
-        phar=pharmacy.query.get(id)
-        address=phar.address
-        name=phar.pharma_name
-        current_user.pharmaid=id
-        current_user.address=address
-        current_user.pharmacy_name=name
-        redirect_url = request.form.get('redirect_url')
-        db.session.commit()
-    return redirect(redirect_url)
 
 @app.route("/reject",methods=["POST"])
 def reject():
@@ -281,3 +262,26 @@ def med_scheduler():
     if form.is_valid():
         print("Form is valid")
     return render_template('med_scheduler.html', form=form) 
+
+@app.route("/change_pincode",methods=["POST"])
+def change_pincode():
+    if request.method == 'POST':
+        pincode=request.form.get("new_pincode")
+        current_user.pincode=pincode
+        redirect_url = request.form.get('redirect_url')
+        db.session.commit()
+    return redirect(redirect_url)
+
+@app.route("/select_pharma",methods=["POST","GET"])
+def select_pharma():
+    if request.method == 'POST':
+        id=request.form.get("selected_pharmacy")
+        phar=pharmacy.query.get(id)
+        address=phar.address
+        name=phar.pharma_name
+        current_user.pharmaid=id
+        current_user.address=address
+        current_user.pharmacy_name=name
+        redirect_url = request.form.get('redirect_url')
+        db.session.commit()
+    return redirect(redirect_url)
