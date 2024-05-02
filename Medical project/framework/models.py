@@ -11,7 +11,7 @@ class users(db.Model, UserMixin):
     hashed_password = db.Column(db.String(length=65), nullable=False)  
     pincode=db.Column(db.String(6), default='000000')
     pharmacy_name = db.Column(db.String(65))
-    pharmaid=db.Column(db.Integer)
+    pharmaid=db.Column(db.Integer,default=0)
     address = db.Column(db.String(256))
     points = db.Column(db.Integer,default=0)
     
