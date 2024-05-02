@@ -61,6 +61,11 @@ def pharma_home():
     all_request=medicine_request_pool.query.filter_by(pharmaid=current_user.get_id())
     return render_template('pharma_home.html', current_user=current_user,all_request=all_request)
 
+@app.route('/profile_page')
+def profile_page():
+    pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
+    return render_template('profile_page.html', user=current_user,pharmacies=pharmacies)
+
 @app.route('/test')
 def test():
     return f"Current user: {current_user.username}"
@@ -78,6 +83,29 @@ def add_points():
         request_points=request.form.get("user_points")
         current_request=medicine_request_pool.query.get(request_id)
         current_request.points_given=request_points
+        redirect_url = request.form.get('redirect_url')
+        db.session.commit()
+    return redirect(redirect_url)
+
+@app.route("/change_pincode",methods=["POST"])
+def change_pincode():
+    if request.method == 'POST':
+        pincode=request.form.get("new_pincode")
+        current_user.pincode=pincode
+        redirect_url = request.form.get('redirect_url')
+        db.session.commit()
+    return redirect(redirect_url)
+
+@app.route("/select_pharma",methods=["POST","GET"])
+def select_pharma():
+    if request.method == 'POST':
+        id=request.form.get("selected_pharmacy")
+        phar=pharmacy.query.get(id)
+        address=phar.address
+        name=phar.pharma_name
+        current_user.pharmaid=id
+        current_user.address=address
+        current_user.pharmacy_name=name
         redirect_url = request.form.get('redirect_url')
         db.session.commit()
     return redirect(redirect_url)
@@ -153,6 +181,9 @@ def login_users():
 @app.route('/med_return', methods=['GET', 'POST'])
 @login_required
 def med_return():
+    if current_user.pharmaid==0:
+        flash("Please select default pharmacy", "danger")
+        return redirect(url_for("profile_page"))
     form = medicine_return_form()    
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode).all()
     if form.validate_on_submit():
@@ -175,7 +206,8 @@ def med_return():
             prescription_name=form.prescription_name.data,
             userid=current_user.userid,
             pincode=current_user.pincode,
-            medications=medications_str
+            medications=medications_str,
+            pharmaid=current_user.pharmaid
         )
         db.session.add(requests)
         db.session.commit()
