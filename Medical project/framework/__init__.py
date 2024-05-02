@@ -13,6 +13,8 @@ login_manager = LoginManager(app)
 
 MED_UPLOAD_FOLDER = os.path.join(os.getcwd(), 'medicine_images')
 PRE_UPLOAD_FOLDER = os.path.join(os.getcwd(), 'prescription_images')
+EQU_UPLOAD_FOLDER = os.path.join(os.getcwd(), 'equip_images')
+BILL_UPLOAD_FOLDER = os.path.join(os.getcwd(), 'bill_images')
 
 if not os.path.exists(MED_UPLOAD_FOLDER):
     os.makedirs(MED_UPLOAD_FOLDER)

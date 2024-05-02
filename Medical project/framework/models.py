@@ -87,3 +87,14 @@ class meds_scheduler(db.Model):
     frequency = db.Column(db.String(50), nullable=False)    
     user_id = db.Column(db.Integer, db.ForeignKey(users.userid), nullable=False)
     notes = db.Column(db.Text, nullable=True)
+    
+class donation_box(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    equip_name=db.Column(db.String(100))
+    points_given = db.Column(db.Integer, default=0)
+    userid=db.Column(db.Integer)
+    pincode=db.Column(db.String(6), default='000000')
+    is_rejected = db.Column(db.Boolean, default=False)  # Boolean value to indicate if the request is urgent
+    is_approved = db.Column(db.Boolean, default=False)
+    reason=db.Column(db.String(256),default="Not known")
+    pharmaid = db.Column(db.Integer,default=1)

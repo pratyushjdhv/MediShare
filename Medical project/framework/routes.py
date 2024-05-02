@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from framework.forms import *
-from framework import app, db, models, login_manager, MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER
-from framework.models import users, pharmacy, medicine_request_pool
+from framework import app, db, models, login_manager, MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER,EQU_UPLOAD_FOLDER,BILL_UPLOAD_FOLDER
+from framework.models import users, pharmacy, medicine_request_pool,donation_box
 from flask_login import login_required, LoginManager, login_user, current_user, logout_user
 import os
 
@@ -19,11 +19,40 @@ def load_user(user_id):
 def home():
     return render_template('home.html', current_user=current_user)
 
-@app.route('/donate')
+@app.route('/donate',methods=["POST","GET"])
 def donate():
     form=medical_equipment_form()
     if form.validate_on_submit():
-        print("okay")
+        existing_request = donation_box.query.filter_by(
+            equip_name=form.equip_name.data,
+            userid=current_user.userid,
+            pincode=current_user.pincode
+        ).first()
+        if existing_request:
+            flash("Request already exists", "danger")
+            return render_template('donate.html', form=form)
+        
+        donation = donation_box (
+            equip_name=form.equip_name.data,
+            userid=current_user.userid,
+            pincode=current_user.pincode
+            )
+        db.session.add(donation)
+        db.session.commit()
+
+        equip_image=request.files['equip_image']
+        bill_image=request.files['bill_image']
+        donation_id = donation.id
+        img_ext1 = os.path.splitext(equip_image.filename)[1]
+        if bill_image:
+            img_ext2 = os.path.splitext(bill_image.filename)[1]
+            img_name2 = f"{donation_id}{img_ext2}"
+            bill_image_path = os.path.join(BILL_UPLOAD_FOLDER, img_name2)
+            bill_image.save(bill_image_path)
+        img_name1 =  f"{donation_id}{img_ext1}"
+        equip_image_path = os.path.join(EQU_UPLOAD_FOLDER, img_name1)
+        equip_image.save(equip_image_path)
+        flash("This is done", "success")
     return render_template('donate.html', form=form)
 
 @app.route('/pharma_home')

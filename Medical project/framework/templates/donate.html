@@ -9,8 +9,8 @@ Home Page
 
 <form method="POST" action="{{ url_for('donate') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
     {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    <!-- Existing form fields -->
+    {{ form.hidden_tag() }} 
+    <!-- Existing form fi   elds -->
     <div class="form-group" style="padding-inline: 10px; width: 50%;">
         <label for="equip_name">Name of equipment:</label>
         {{ form.equip_name(class="form-control") }}
