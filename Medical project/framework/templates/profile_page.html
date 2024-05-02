@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+medicine return
+{% endblock %}
+{% block content %}
+
+<body>
+    <h1>User Information</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ user.userid }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.fullname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.pharmacy_name }} , {{ user.address }} </td>
+            </tr>
+        </tbody>
+    </table>
+    <form method="POST" action="/change_pincode">
+        <input type="text" name="new_pincode" placeholder="New Pincode" value="{{ user.pincode }}">
+        <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
+        <button type="submit">Change</button>
+    </form>
+
+    <form method="POST" action="/select_pharma">
+        <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
+        <label for="pharmacy">Choose a pharmacy:</label>
+        <select id="pharmacy" name="selected_pharmacy">
+            {% for pharmacy in pharmacies %}
+            <option value="{{ pharmacy.pharmaid}}">{{ pharmacy.pharma_name }} ,{{ pharmacy.address }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Select</button>
+    </form>
+
+</body>
+
+{% endblock %}
