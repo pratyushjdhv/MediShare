@@ -5,50 +5,53 @@ medicine return
 {% block content %}
 <body class="text-center">
 <h1>Return medicine</h1>
-<form method="POST" action="{{ url_for('med_return') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    <!-- Existing form fields -->
-    <div class="form-group" style="padding-inline: 10px; width: 50%;">
-        {{ form.prescription_name.label }}        
-        {{ form.prescription_name(class="form-control", placeholder="Prescription Name") }}
-        {% for error in form.prescription_name.errors %} 
-        <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-    </div>
+<div class="box">
+    <form method="POST" action="{{ url_for('med_return') }}" enctype="multipart/form-data" class="form-register" style="font-size:20px;text-align: left;">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        <!-- Existing form fields -->
+        <div class="form-group" style="padding-inline: 10px; width: 50%;">
+            {{ form.prescription_name.label }}        
+            {{ form.prescription_name(class="form-control", placeholder="Prescription Name") }}
+            {% for error in form.prescription_name.errors %} 
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
 
-    <div class="form-group" style="display: flex; align-items: center; padding-inline: 10px;">
-        <div style="margin-right: 30px; width: 15%;">
-            <i class="link bi bi-prescription"></i> 
-            {{ form.prescription_image.label }}            
-            {{ form.prescription_image(class="form-control", placeholder="prescription image") }}
-            {% for error in form.prescription_image.errors %} 
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
+        <div class="form-group" style="display: flex; align-items: center; padding-inline: 10px;">
+            <div style="margin-right: 30px; width: 15%;">
+                <i class="link bi bi-prescription"></i> 
+                {{ form.prescription_image.label }}            
+                {{ form.prescription_image(class="form-control", placeholder="prescription image") }}
+                {% for error in form.prescription_image.errors %} 
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div style="margin-right: 50px; width: 15%;">
+                <i class="link bi bi-capsule-pill"></i>
+                {{ form.medicine_image.label }} 
+                {{ form.medicine_image(class="form-control", placeholder="medicine image") }}
+                {% for error in form.medicine_image.errors %} 
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
         </div>
-        <div style="margin-right: 50px; width: 15%;">
-            <i class="link bi bi-capsule-pill"></i>
-            {{ form.medicine_image.label }} 
-            {{ form.medicine_image(class="form-control", placeholder="medicine image") }}
-            {% for error in form.medicine_image.errors %} 
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
+        
+        <!-- Dynamic meds input field -->
+        <div class="form-group" style="padding-inline: 10px; max-height: 200px; overflow-y: auto; ">            
+            <div id="medsFields">
+                <label  for="meds">Medications 1:</label>    
+                <input type="text" name="meds" placeholder="medicine 1" style="padding-inline: 10px; border-radius: 10px;">
+                
+            </div>
         </div>
-    </div>
+        <div style="padding-inline: 10px;">
+            <button type="button" id="addFieldButton" class="btnn mt-4" >Add Medication</button>
+            <input type="submit" value="Submit" class="btnn mt-4">
+        </div>    
+    </form>
+</div>
     
-    <!-- Dynamic meds input field -->
-    <div class="form-group" style="padding-inline: 10px; max-height: 200px; overflow-y: auto; ">            
-        <div id="medsFields">
-            <label  for="meds">Medications 1:</label>    
-            <input type="text" name="meds" placeholder="medicine 1" style="padding-inline: 10px; border-radius: 10px;">
-            
-        </div>
-    </div>
-    <div style="padding-inline: 10px;">
-        <button type="button" id="addFieldButton" class="btnn mt-4" >Add Medication</button>
-        <input type="submit" value="Submit" class="btnn mt-4">
-    </div>    
-</form>
 
     
 <script>
