@@ -19,6 +19,13 @@ def load_user(user_id):
 def home():
     return render_template('home.html', current_user=current_user)
 
+@app.route('/donate')
+def donate():
+    form=medical_equipment_form()
+    if form.validate_on_submit():
+        print("okay")
+    return render_template('donate.html', form=form)
+
 @app.route('/pharma_home')
 def pharma_home():
     print(current_user.get_id())

@@ -42,3 +42,8 @@ class med_scheduler_form(FlaskForm):
     dosage = StringField("Dosage :",validators=[DataRequired(message="Cannot be empty"),Length(max=50,message="Too long!")])
     frequency = StringField("Frequency :",validators=[DataRequired(message="Cannot be empty"),Length(max=50,message="Too long!")])
     submit = SubmitField("Submit")
+
+class medical_equipment_form(FlaskForm):
+    equip_name = StringField("Name of equipment:",validators=[DataRequired(message="Cannot be empty"),Length(max=100,message="Too long!")])
+    equip_image= FileField("Upload equipment image:", validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
+    bill_image= FileField("Upload Bill image if avaiable:", validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
