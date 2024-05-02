@@ -10,8 +10,7 @@ medicine return
     {{ form.hidden_tag() }}
     <!-- Existing form fields -->
     <div class="form-group" style="padding-inline: 10px; width: 50%;">
-        {{ form.prescription_name.label }}
-        
+        {{ form.prescription_name.label }}        
         {{ form.prescription_name(class="form-control", placeholder="Prescription Name") }}
         {% for error in form.prescription_name.errors %} 
         <span class="text-danger">{{ error }}</span>
