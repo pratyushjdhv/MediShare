@@ -99,9 +99,9 @@
             </div>
 
 
-            {% if current_user.is_authenticated %}
-            {% if current_user.license_no %}
+            {% if current_user.is_authenticated %}            
                 <ul class="navbar-nav me-auto">
+                    {% if current_user.license_no %}
                     <li class="nav-item">
                         <div style="text-align: center;">
                             <a class="nav-link text">
