@@ -12,89 +12,39 @@ Pharmacy Home
 <a href="{{ url_for('register_pharma') }}">Register pharma</a>
 <a href="{{ url_for('med_return') }}">Medicine Return</a>
 -->
-<h2>Pharmacy Requests option to see the images and username</h2>
+<h2>Users list</h2>
+
+<form method="POST" action="{{ url_for('search_user') }}" >
+    <label for="searchInput">User Id:</label>
+    <input required type="number" id="searchInput" name="userid" placeholder="Enter User Id">
+    <button type="submit">Search</button>
+</form>
+
 <table>
     <thead>
         <tr>
-            <th>Request ID</th>
             <th>User ID</th>
-            <th>Prescription Name</th>
-            <th>Pincode</th>
-            <th>Medications</th>
-            <th>Approve</th>
-            <th>Reject</th>
+            <th>full name</th>
+            <th>points</th>
+            <th>reduce points by</th>
         </tr>
     </thead>
     <tbody>
-        {% for request in all_request  %}
-        {% if request.is_rejected == 0 and request.is_approved==0 %}
+        {% for user in all_user  %}
         <tr>
-            <td>{{ request.id }}</td>
-            <td>{{ request.userid }}</td>
-            <td>{{ request.prescription_name }}</td>
-            <td>{{ request.pincode }}</td>
-            <td>{{ request.medications }}</td>
+            <td>{{ user.userid }}</td>
+            <td>{{ user.fullname }}</td>
+            <td>{{ user.points }}</td>
             <td>
-                <form action="{{ url_for('approve') }}" method="post" style="display: inline;">
-                    <input type="hidden" name="request_id" value="{{ request.id }}">
-                    <input type="hidden" name="redirect_url" value="{{ url_for('pharma_home') }}">
-                    <button type="submit">Accept</button>
-                </form>
-                <!-- Reject Button and Hidden Rejection Form -->
-                <button onclick="toggleReject('{{ request.id }}')">Reject</button>
-                <div id="reject-box-{{ request.id }}" style="display: none;">
-                    <form action="{{ url_for('reject') }}" method="post">
-                        <input type="hidden" name="request_id" value="{{ request.id }}">
-                        <input type="hidden" name="redirect_url" value="{{ url_for('pharma_home') }}">
-                        <input type="text" name="rejection_reason" placeholder="Reason for rejection" required>
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-                
+            <form  method="POST" action="{{ url_for('reduce_point') }}" >
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <input type="number" name="points" required placeholder="Take points">
+                <button type="submit">Reduce</button>
+            </form>
             </td>
         </tr>
-        {% endif %}
         {% endfor %}
     </tbody>
 </table>
 
-<h2>Point addmission to user based on request</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Request ID</th>
-            <th>User ID</th>
-            <th>Prescription Name</th>
-            <th>Pincode</th>
-            <th>Medications</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for request in all_request  %}
-        {% if request.is_approved==1 and request.points_given==0 %}
-        <tr>
-            <td>{{ request.id }}</td>
-            <td>{{ request.userid }}</td>
-            <td>{{ request.prescription_name }}</td>
-            <td>{{ request.pincode }}</td>
-            <td>{{ request.medications }}</td>
-            <td>
-                <form action="{{ url_for('add_points') }}" method="post" style="display: inline;">
-                    <input type="hidden" name="request_id" value="{{ request.id }}">
-                    <input type="hidden" name="redirect_url" value="{{ url_for('pharma_home') }}">
-                    <input type="number" name="user_points" min="0" placeholder="Enter points" required>  
-                    <button type="submit" >give points</button>
-                </form>
-            </td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-    </tbody>
-</table>
-<script>
-    function toggleReject(requestId) {
-        const rejectBox = document.getElementById(`reject-box-${requestId}`);
-        rejectBox.style.display = (rejectBox.style.display === 'none') ? 'block' : 'none';
-    }
-    </script>
 {% endblock %}

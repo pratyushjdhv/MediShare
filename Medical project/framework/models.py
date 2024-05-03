@@ -58,7 +58,7 @@ class pharmacy(db.Model,UserMixin):
         return str(self.pharmaid) # Convert to string because Flask-Login expects a string ID
     
     def is_pharma(self):
-        return self.is_pharmacist
+        return True
 
 
 '''class pharma_address(db.Model,UserMixin):
