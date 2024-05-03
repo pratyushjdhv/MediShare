@@ -36,8 +36,8 @@
                 <td>{{ request.pincode }}</td>
                 <td>{{ request.medications }}</td>
                 <td>
-                    <img src="{{ MED_UPLOAD_FOLDER }}/{{request.id|string}}.png" alt="Medicine Image">
-                    <img src="{{PRE_UPLOAD_FOLDER }}/{{request.id|string}}.png" width="200" alt="Prescription Image">
+                    <button onclick="openImage('{{ MED_UPLOAD_FOLDER }}/{{ request.id|string }}.png')">View Medicine Image</button>
+                    <button onclick="openImage('{{ PRE_UPLOAD_FOLDER }}/{{ request.id|string }}.png')">View Prescription Image</button>
                 </td>
                 <td>
                     <form action="{{ url_for('approve') }}" method="post" style="display: inline;">
