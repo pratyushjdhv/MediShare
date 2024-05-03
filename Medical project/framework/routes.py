@@ -94,7 +94,9 @@ def add_points():
         request_id=request.form.get("request_id")
         request_points=request.form.get("user_points")
         current_request=medicine_request_pool.query.get(request_id)
+        user=users.query.get(current_request.userid)
         current_request.points_given=request_points
+        user.points=request_points
         redirect_url = request.form.get('redirect_url')
         db.session.commit()
     return redirect(redirect_url)
