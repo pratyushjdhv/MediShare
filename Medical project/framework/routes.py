@@ -70,6 +70,30 @@ def donate():
     return render_template('donate.html', form=form, user=current_user)
 
 
+@app.route('/search_user',methods=["POST","GET"])
+def search_user():
+    userid=request.form.get("userid")
+    all_users=users.query.filter_by(userid=userid)
+    count=users.query.filter_by(userid=userid).count()
+    if count==0:
+        flash("User not find", "danger")
+    return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
+
+@app.route('/reduce_point',methods=["POST","GET"])
+def reduce_point():
+    userid=request.form.get("userid")
+    user=users.query.get(userid)
+    rpoints=int(request.form.get("points"))
+    if user.points >= rpoints:
+        final=user.points-rpoints
+        user.points=final
+        db.session.commit()
+        flash("Points reduced", "success")
+    else:
+        flash("cannot be reduced", "danger")
+    all_users=users.query.filter_by(userid=userid)
+    return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
+
 @app.route('/pharma_home')
 def pharma_home():
     print(current_user.get_id())
@@ -81,10 +105,8 @@ def pharma_home():
 
 @app.route('/pharma_user')
 def pharma_user():
-    print(current_user.get_id())
-    all_request = medicine_request_pool.query.filter_by(
-        pharmaid=current_user.get_id())
-    return render_template('pharma_home.html', current_user=current_user, all_request=all_request)
+    all_user=users.query.all()
+    return render_template('pharma_user.html', current_user=current_user,all_user=all_user)
 
 
 @app.route('/test')
@@ -102,10 +124,10 @@ def logout():
 @app.route("/add_points", methods=["POST"])
 def add_points():
     if request.method == 'POST':
-        request_id = request.form.get("request_id")
-        request_points = request.form.get("user_points")
-        current_request = medicine_request_pool.query.get(request_id)
-        current_request.points_given = request_points
+        request_id=request.form.get("request_id")
+        request_points=request.form.get("user_points")
+        current_request=medicine_request_pool.query.get(request_id)
+        current_request.points_given=request_points
         redirect_url = request.form.get('redirect_url')
         db.session.commit()
     return redirect(redirect_url)
