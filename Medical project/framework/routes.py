@@ -30,6 +30,13 @@ def profile_page():
         pincode=current_user.pincode).count()
     return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount)
 
+@app.route('/view_image', methods=['POST'])
+def view_image():
+    # Retrieve the image path from the form data
+    image_path = request.form.get('image_path')
+
+    # Redirect the user to the image URL
+    return redirect(image_path)
 
 @app.route('/donate', methods=["POST", "GET"])
 @login_required
@@ -95,12 +102,14 @@ def reduce_point():
 
 @app.route('/pharma_home')
 def pharma_home():
-    print(current_user.get_id())
     all_request = medicine_request_pool.query.filter_by(
         pharmaid=current_user.get_id())
-    print(MED_UPLOAD_FOLDER)
     return render_template('pharma_home.html', current_user=current_user, all_request=all_request, MED_UPLOAD_FOLDER=MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER=PRE_UPLOAD_FOLDER)
 
+@app.route('/request_his')
+def request_his():
+    all_request = medicine_request_pool.query.filter_by(userid=current_user.get_id())
+    return render_template('request_his.html', current_user=current_user, all_request=all_request)
 
 @app.route('/pharma_user')
 def pharma_user():
@@ -123,10 +132,13 @@ def logout():
 @app.route("/add_points", methods=["POST"])
 def add_points():
     if request.method == 'POST':
+        userid=request.form.get("userid")
         request_id=request.form.get("request_id")
         request_points=request.form.get("user_points")
         current_request=medicine_request_pool.query.get(request_id)
         current_request.points_given=request_points
+        user=users.query.get(userid)
+        user.points=request_points
         redirect_url = request.form.get('redirect_url')
         db.session.commit()
     return redirect(redirect_url)
