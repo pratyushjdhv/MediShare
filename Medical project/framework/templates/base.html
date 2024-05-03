@@ -40,7 +40,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    {% if not current_user.license_no %}
+                    {% if current_user.license_no %}
                         <li class="nav-item">
                             <div style="text-align: center;">
                                 <a class="nav-link" style="display: block; color:#87CEFA;"
@@ -122,7 +122,7 @@
                 {% endif %}
 
 
-
+            
                 <li class="nav-item">
                     <div style="text-align: center;">
                         <div class="nav-link text" style="display: block;">

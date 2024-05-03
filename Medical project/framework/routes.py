@@ -16,11 +16,33 @@ def load_user(user_id):
 '''
 
 @app.route('/')
+@app.route('/login_users', methods=['POST', 'GET'])
+def login_users():
+    form1 = login_user_form()
+    form2 = register_user_form()
+    if form1.validate_on_submit():
+        email = form1.email.data
+        password = form1.password.data
+        user = users.query.filter_by(email=email).first()
+        if user:
+            if user.check_password(password):
+                login_user(user)
+                flash(f'Account created successfully! You are now logged in as {
+                      user.username} ', category='success')
+                return redirect(url_for("home"))
+            else:
+                flash("Wrong password", "danger")
+                return redirect(url_for("login_users"))
+        flash("User doesn't exist", "danger")
+        return redirect(url_for("login_users"))
+    return render_template('login_users.html', login_form=form1, register_form=form2)
+
 @app.route('/home')
 @login_required
 def home():
     if current_user.is_pharma:
-        redirect(url_for("pharma_home"))
+        print("this is lulli")
+        return redirect(url_for("pharma_home"))
     if current_user.is_authenticated and current_user.pincode:
         pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
         return render_template('home.html', user=current_user, pharmacies=pharmacies)
@@ -29,6 +51,8 @@ def home():
 @app.route('/profile_page')
 @login_required
 def profile_page():
+    if current_user.is_pharma: 
+        return redirect(url_for("pharma_profile_page"))
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
     pharmacount = pharmacy.query.filter_by(
         pincode=current_user.pincode).count()
@@ -37,7 +61,6 @@ def profile_page():
 @app.route('/pharma_profile_page')
 @login_required
 def pharma_profile_page():
-    
     return render_template('pharma_profile_page.html', user=current_user)
 
 
@@ -211,27 +234,6 @@ def register_user():
     # Pass only register_form to the template
     return render_template('login_users.html', login_form=form1, register_form=form2)
 
-
-@app.route('/login_users', methods=['POST', 'GET'])
-def login_users():
-    form1 = login_user_form()
-    form2 = register_user_form()
-    if form1.validate_on_submit():
-        email = form1.email.data
-        password = form1.password.data
-        user = users.query.filter_by(email=email).first()
-        if user:
-            if user.check_password(password):
-                login_user(user)
-                flash(f'Account created successfully! You are now logged in as {
-                      user.username} ', category='success')
-                return redirect(url_for("home"))
-            else:
-                flash("Wrong password", "danger")
-                return redirect(url_for("login_users"))
-        flash("User doesn't exist", "danger")
-        return redirect(url_for("login_users"))
-    return render_template('login_users.html', login_form=form1, register_form=form2)
 
 
 @app.route('/med_return', methods=['GET', 'POST'])
