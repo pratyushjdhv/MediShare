@@ -63,7 +63,8 @@ def donate():
 def pharma_home():
     print(current_user.get_id())
     all_request=medicine_request_pool.query.filter_by(pharmaid=current_user.get_id())
-    return render_template('pharma_home.html', current_user=current_user,all_request=all_request)
+    print(MED_UPLOAD_FOLDER)
+    return render_template('pharma_home.html', current_user=current_user,all_request=all_request,MED_UPLOAD_FOLDER=MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER= PRE_UPLOAD_FOLDER)
 
 @app.route('/pharma_user')
 def pharma_user():
