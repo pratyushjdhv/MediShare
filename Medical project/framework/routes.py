@@ -21,8 +21,7 @@ def home():
     if current_user.is_authenticated and current_user.pincode:
         pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
         return render_template('home.html', user=current_user, pharmacies=pharmacies)
-    return render_template('home.html')
-
+    return render_template('home.html', user=current_user)
 
 @app.route('/profile_page')
 def profile_page():
