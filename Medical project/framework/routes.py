@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from framework.forms import *
 from framework import app, db, models, login_manager, MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER,EQU_UPLOAD_FOLDER,BILL_UPLOAD_FOLDER
-from framework.models import users, pharmacy, medicine_request_pool,donation_box
+from framework.models import *
 from flask_login import login_required, LoginManager, login_user, current_user, logout_user
 import os
 
@@ -271,9 +271,31 @@ def login_pharma():
 @login_required
 def med_scheduler():
     form = med_scheduler_form()
-    if form.is_valid():
+    if form.validate_on_submit():
+        form.user_id.data = current_user.userid
         print("Form is valid")
-    return render_template('med_scheduler.html', form=form) 
+        print("Current user ID:", current_user.userid)  # Debugging print
+        schedule = meds_scheduler(
+            user_id=current_user.userid,  # Use current_user.userid here
+            med_name=form.med_name.data,
+            dosage=form.dosage.data,
+            frequency=form.frequency.data,
+            notes=form.notes.data
+        )
+        # Check if the medicine already exists for the current user
+        med = meds_scheduler.query.filter_by(user_id=current_user.userid, med_name=form.med_name.data).first()
+        if med:
+            flash("Medicine already exists", "danger")
+            return redirect(url_for('med_scheduler'))  # Redirect instead of rendering the template
+        db.session.add(schedule)
+        db.session.commit()
+        flash('Medicine scheduled successfully', 'success')
+        return redirect(url_for('med_scheduler'))  # Redirect to avoid resubmission on page refresh
+    else:
+        print("Form errors:", form.errors)  # Debugging print for form errors
+    return render_template('med_scheduler.html', form=form)
+
+
 
 @app.route("/change_pincode",methods=["POST"])
 def change_pincode():

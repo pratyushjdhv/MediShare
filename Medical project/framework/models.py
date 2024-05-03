@@ -83,8 +83,8 @@ class medicine_request_pool(db.Model,UserMixin):
     points_given = db.Column(db.Integer, default=0)#are points assigned?
 
 class meds_scheduler(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100),db.ForeignKey(users.username) ,nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    med_name = db.Column(db.String(100),nullable=False)
     dosage = db.Column(db.String(50), nullable=False)
     frequency = db.Column(db.String(50), nullable=False)    
     user_id = db.Column(db.Integer, db.ForeignKey(users.userid), nullable=False)

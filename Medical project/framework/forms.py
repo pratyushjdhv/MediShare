@@ -41,6 +41,8 @@ class med_scheduler_form(FlaskForm):
     med_name = StringField("Medicine Name :",validators=[DataRequired(message="Cannot be empty"),Length(max=100,message="Too long!")])
     dosage = StringField("Dosage :",validators=[DataRequired(message="Cannot be empty"),Length(max=50,message="Too long!")])
     frequency = StringField("Frequency :",validators=[DataRequired(message="Cannot be empty"),Length(max=50,message="Too long!")])
+    notes = TextAreaField("Notes :",validators=[Length(max=500,message="Too long!")])
+    user_id = StringField("User ID :")
     submit = SubmitField("Submit")
 
 class medical_equipment_form(FlaskForm):
