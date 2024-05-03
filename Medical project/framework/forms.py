@@ -18,7 +18,7 @@ class login_user_form(FlaskForm):
 
 class register_pharma_form(FlaskForm):
     license_no=StringField("First Name :",validators=[DataRequired(message="Cannot be empty"),Length(max=12,message="Too long!")])
-    pharma_name=StringField("First Name :",validators=[DataRequired(message="Cannot be empty"),Length(max=35,message="Too long!")])
+    username=StringField("First Name :",validators=[DataRequired(message="Cannot be empty"),Length(max=35,message="Too long!")])
     pincode=StringField("Pincode :",validators=[DataRequired(message="Cannot be empty"),Length(min=6,max=6,message="Should be 6 digit!")])
     email = EmailField("Email :", validators=[DataRequired(message="Cannot be empty",), Email(message="Enter a valid email"),Length(max=320,message="Too long!")])
     password=PasswordField("Password :",validators=[DataRequired(message="Cannot be empty"),Length(min=8,message="Should atleast contain 8 character!"),Length(max=80,message="Too long!")])

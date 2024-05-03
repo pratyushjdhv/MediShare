@@ -37,7 +37,7 @@ class users(db.Model, UserMixin):
 class pharmacy(db.Model,UserMixin):
     pharmaid = db.Column(db.Integer, autoincrement=True, primary_key=True)
     license_no = db.Column(db.String(12))
-    pharma_name=db.Column(db.String(65))
+    username=db.Column(db.String(65))
     pincode = db.Column(db.Integer, nullable=False)
     email=db.Column(db.String(320),nullable=False)
     hashed_password=db.Column(db.String(length=65),nullable=False)
@@ -57,6 +57,7 @@ class pharmacy(db.Model,UserMixin):
     def get_id(self):
         return str(self.pharmaid) # Convert to string because Flask-Login expects a string ID
     
+    @staticmethod
     def is_pharma(self):
         return self.is_pharmacist
 

@@ -37,7 +37,7 @@ medicine return
         <select id="pharmacy" name="selected_pharmacy">
             {% for pharmacy in pharmacies %}
             
-            <option value="{{ pharmacy.pharmaid}}">{{ pharmacy.pharma_name }} ,{{ pharmacy.address }}</option>
+            <option value="{{ pharmacy.pharmaid}}">{{ pharmacy.username }} ,{{ pharmacy.address }}</option>
             {% endfor %}
         </select>
         <button type="submit">Select</button>
