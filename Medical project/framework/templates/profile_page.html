@@ -25,13 +25,13 @@ medicine return
             </tr>
         </tbody>
     </table>
-    <form method="POST" action="/change_pincode">
+    <form method="POST" action="{{ url_for('change_pincode') }}" >
         <input type="text" name="new_pincode" placeholder="New Pincode" value="{{ user.pincode }}">
         <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
         <button type="submit">Change</button>
     </form>
 
-    <form method="POST" action="/select_pharma">
+    <form method="POST" action="{{ url_for('select_pharma') }}" >
         <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
         <label for="pharmacy">Choose a pharmacy:</label>
         <select id="pharmacy" name="selected_pharmacy">
