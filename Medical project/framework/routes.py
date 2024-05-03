@@ -19,7 +19,7 @@ def load_user(user_id):
 def home():
     if current_user.is_authenticated:
         pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
-        return render_template('home.html', user=current_user,pharmacies=pharmacies, is_pharma=is_pharma)
+        return render_template('home.html', user=current_user,pharmacies=pharmacies)
     return render_template('home.html')
     
 
