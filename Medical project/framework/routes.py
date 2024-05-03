@@ -17,7 +17,10 @@ def load_user(user_id):
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
+    if current_user.is_pharma:
+        redirect(url_for("pharma_home"))
     if current_user.is_authenticated and current_user.pincode:
         pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
         return render_template('home.html', user=current_user, pharmacies=pharmacies)
@@ -25,13 +28,21 @@ def home():
 
 
 @app.route('/profile_page')
+@login_required
 def profile_page():
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
     pharmacount = pharmacy.query.filter_by(
         pincode=current_user.pincode).count()
     return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount)
 
+@app.route('/pharma_profile_page')
+@login_required
+def pharma_profile_page():
+    return render_template('pharma_profile_page.html', user=current_user)
+
+
 @app.route('/view_image', methods=['POST'])
+@login_required
 def view_image():
     # Retrieve the image path from the form data
     image_path = request.form.get('image_path')
@@ -78,6 +89,7 @@ def donate():
 
 
 @app.route('/search_user',methods=["POST","GET"])
+@login_required
 def search_user():
     userid=request.form.get("userid")
     all_users=users.query.filter_by(userid=userid)
@@ -87,6 +99,7 @@ def search_user():
     return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
 
 @app.route('/reduce_point',methods=["POST","GET"])
+@login_required
 def reduce_point():
     userid=request.form.get("userid")
     user=users.query.get(userid)
@@ -102,25 +115,28 @@ def reduce_point():
     return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
 
 @app.route('/pharma_home')
+@login_required
 def pharma_home():
     all_request = medicine_request_pool.query.filter_by(
         pharmaid=current_user.get_id())
     return render_template('pharma_home.html', current_user=current_user, all_request=all_request, MED_UPLOAD_FOLDER=MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER=PRE_UPLOAD_FOLDER)
 
 @app.route('/request_his')
+@login_required
 def request_his():
     all_request = medicine_request_pool.query.filter_by(userid=current_user.get_id())
     return render_template('request_his.html', current_user=current_user, all_request=all_request)
 
 @app.route('/pharma_user')
+@login_required
 def pharma_user():
     all_user=users.query.all()
     return render_template('pharma_user.html', current_user=current_user,all_user=all_user)
 
 
-@app.route('/test')
+'''@app.route('/test')
 def test():
-    return f"Current user: {current_user.username}"
+    return f"Current user: {current_user.username}'''
 
 
 @app.route('/logout')
@@ -131,6 +147,7 @@ def logout():
 
 
 @app.route("/add_points", methods=["POST"])
+@login_required
 def add_points():
     if request.method == 'POST':
         userid=request.form.get("userid")
@@ -146,6 +163,7 @@ def add_points():
 
 
 @app.route("/reject", methods=["POST"])
+@login_required
 def reject():
     if request.method == 'POST':
         request_id = request.form.get("request_id")
@@ -159,6 +177,7 @@ def reject():
 
 
 @app.route("/approve", methods=["POST"])
+@login_required
 def approve():
     if request.method == 'POST':
         request_id = request.form.get("request_id")
@@ -348,6 +367,7 @@ def med_scheduler():
 
 
 @app.route("/change_pincode", methods=["POST"])
+@login_required
 def change_pincode():
     if request.method == 'POST':
         pincode = request.form.get("new_pincode")
@@ -358,6 +378,7 @@ def change_pincode():
 
 
 @app.route("/select_pharma", methods=["POST", "GET"])
+@login_required
 def select_pharma():
     if request.method == 'POST':
         id = request.form.get("selected_pharmacy")

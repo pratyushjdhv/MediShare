@@ -36,7 +36,7 @@ class users(db.Model, UserMixin):
     pharmaid = db.Column(db.Integer, default=0)
     address = db.Column(db.String(256))
     points = db.Column(db.Integer, default=0)
-
+    is_pharma=db.Column(db.Boolean, default=False)
     @property
     def password(self):
         return self.hashed_password
@@ -80,7 +80,7 @@ class pharmacy(db.Model, UserMixin):
     email = db.Column(db.String(320), nullable=False)
     hashed_password = db.Column(db.String(length=65), nullable=False)
     address = db.Column(db.String(256), nullable=False)
-
+    is_pharma = db.Column(db.Boolean, default=True)
     @property
     def password(self):
         return self.hashed_password
