@@ -30,17 +30,22 @@ medicine return
         <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
         <button type="submit">Change</button>
     </form>
-
+    {%if pharmacount!=0 %}
     <form method="POST" action="{{ url_for('select_pharma') }}" >
         <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
         <label for="pharmacy">Choose a pharmacy:</label>
         <select id="pharmacy" name="selected_pharmacy">
             {% for pharmacy in pharmacies %}
+            
             <option value="{{ pharmacy.pharmaid}}">{{ pharmacy.pharma_name }} ,{{ pharmacy.address }}</option>
             {% endfor %}
         </select>
         <button type="submit">Select</button>
     </form>
+    {% else %}
+    <!-- Display alternative content or message when pharmacount is equal to zero or not defined -->
+    <p>No pharmacies available at current area.</p>
+    {%endif%}
 
 </body>
 

@@ -4,6 +4,7 @@
 Home Page
 {% endblock %}
 {% block content %}
+{% if current_user.is_authenticated %}
 <nav class="navbar navbar-expand-md navbar-dark ">
     <div class="container">
         <form class="navbar-form" action="{{ url_for('select_pharma') }}" method="post">
@@ -14,7 +15,6 @@ Home Page
                 </div>
             </div>
         </form>
-
         <form class="navbar-form" action="{{ url_for('change_pincode') }}" method="post">
             <div class="input-group">
                 <input type="text" name="new_pincode" class="form-control" placeholder="Change Pin value="{{ user.pincode }}">
@@ -26,9 +26,8 @@ Home Page
             <input type="hidden" name="redirect_url" value="{{ url_for('profile_page') }}">
             <button type="submit">Change</button>
         </form>
-
     </div>
-
+{% endif %}
     <div>
         <!-- Your user authentication logic goes here -->
     </div>

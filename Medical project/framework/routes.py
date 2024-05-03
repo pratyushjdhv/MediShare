@@ -17,8 +17,10 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/home')
 def home():
-    pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
-    return render_template('home.html', user=current_user,pharmacies=pharmacies)
+    if current_user.is_authenticated:
+        pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
+        return render_template('home.html', user=current_user,pharmacies=pharmacies)
+    return render_template('home.html')
     
 
 @app.route('/donate',methods=["POST","GET"])
@@ -63,10 +65,17 @@ def pharma_home():
     all_request=medicine_request_pool.query.filter_by(pharmaid=current_user.get_id())
     return render_template('pharma_home.html', current_user=current_user,all_request=all_request)
 
+@app.route('/pharma_user')
+def pharma_user():
+    print(current_user.get_id())
+    all_request=medicine_request_pool.query.filter_by(pharmaid=current_user.get_id())
+    return render_template('pharma_home.html', current_user=current_user,all_request=all_request)
+
 @app.route('/profile_page')
 def profile_page():
     pharmacies=pharmacy.query.filter_by(pincode=current_user.pincode)
-    return render_template('profile_page.html', user=current_user,pharmacies=pharmacies)
+    pharmacount=pharmacy.query.filter_by(pincode=current_user.pincode).count()
+    return render_template('profile_page.html', user=current_user,pharmacies=pharmacies,pharmacount=pharmacount)
 
 @app.route('/test')
 def test():
