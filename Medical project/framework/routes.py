@@ -250,7 +250,7 @@ def register_pharma():
     form2 = register_pharma_form()  # Use register_user_form here
     if form2.validate_on_submit():
         create_user = pharmacy(
-            pharma_name=form2.pharma_name.data,
+            username=form2.username.data,
             license_no=form2.license_no.data,
             email=form2.email.data,
             password=form2.password.data,
@@ -280,7 +280,7 @@ def login_pharma():
         if user:
             if user.check_password(password):
                 login_user(user)                
-                flash(f'Pharamcy Account created successfully! You are now logged in as {user.pharma_name} ', category='success')
+                flash(f'Pharamcy Account created successfully! You are now logged in as {user.username} ', category='success')
                 return redirect(url_for("pharma_home"))
             else:
                 flash("Wrong password", "danger")
@@ -335,7 +335,7 @@ def select_pharma():
         id=request.form.get("selected_pharmacy")
         phar=pharmacy.query.get(id)
         address=phar.address
-        name=phar.pharma_name
+        name=phar.username
         current_user.pharmaid=id
         current_user.address=address
         current_user.pharmacy_name=name
