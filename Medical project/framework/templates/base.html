@@ -100,7 +100,7 @@
 
 
             {% if current_user.is_authenticated %}
-            {% if not current_user.license_no %}
+            {% if current_user.license_no %}
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <div style="text-align: center;">
