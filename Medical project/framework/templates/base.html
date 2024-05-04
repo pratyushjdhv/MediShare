@@ -121,6 +121,7 @@
                             </div>
                         </div>
                     </li>
+                {% endif %}
 
 
             
@@ -135,10 +136,11 @@
                 <li class="nav-item">
                     <div style="text-align: center;">
                         <a class="nav-link text" style="display: block;" href="{{ url_for('profile_page') }}">
-                            <i class="bi bi-person-fill " style="display: block;"></i> {{current_user.username}}
+                            <i class="bi bi-person-fill " style="display: block;"></i> {{current_user.username}}{{current_user.pharmacy_name}}
                         </a>
                     </div>
                 </li>
+                
 
                 <li class="nav-item">
                     <div style="text-align: center;">
@@ -148,7 +150,7 @@
                     </div>
                 </li>
             </ul>
-            {% endif %}
+            
             {% else %} <!-- Add this line -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">

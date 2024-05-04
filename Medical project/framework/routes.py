@@ -334,6 +334,7 @@ def login_pharma():
         user = pharmacy.query.filter_by(email=email).first()
         if user:
             if user.check_password(password):
+                print (current_user)
                 login_user(user)
                 flash(f'Pharmacy Account created successfully! You are now logged in as {
                       user.pharmacy_name}', category='success')
@@ -398,7 +399,7 @@ def select_pharma():
         id = request.form.get("selected_pharmacy")
         phar = pharmacy.query.get(id)
         address = phar.address
-        name = phar.username
+        name = phar.pharmacy_name
         current_user.pharmaid = id
         current_user.address = address
         current_user.pharmacy_name = name
