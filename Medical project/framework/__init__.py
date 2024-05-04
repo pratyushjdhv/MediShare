@@ -28,6 +28,7 @@ login_manager.login_message = "Please log in to access this page."
 
 from framework.models import users, pharmacy
 
+
 '''@login_manager.user_loader
 def load_user(user_id):
     # Check if user is a regular user
