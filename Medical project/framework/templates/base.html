@@ -40,7 +40,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    {% if current_user.license_no %}
+                    {% if not current_user.is_pharma %}
                         <li class="nav-item">
                             <div style="text-align: center;">
                                 <a class="nav-link" style="display: block; color:#87CEFA;"
@@ -101,7 +101,7 @@
 
             {% if current_user.is_authenticated %}            
                 <ul class="navbar-nav me-auto">
-                    {% if current_user.license_no %}
+                    {% if not current_user.is_pharma %}
                     <li class="nav-item">
                         <div style="text-align: center;">
                             <a class="nav-link text">

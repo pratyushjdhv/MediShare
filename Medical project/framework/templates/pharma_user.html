@@ -3,48 +3,49 @@
 Pharmacy Home
 {% endblock %}
 {% block content %}
-<h2>homeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</h2>
 
-<!--
-<a href="{{ url_for('login_users') }}">Login</a>
-<a href="{{ url_for('register_user') }}">Register</a>
-<a href="{{ url_for('login_pharma') }}">Login pharma</a>
-<a href="{{ url_for('register_pharma') }}">Register pharma</a>
-<a href="{{ url_for('med_return') }}">Medicine Return</a>
--->
-<h2>Users list</h2>
 
-<form method="POST" action="{{ url_for('search_user') }}" >
-    <label for="searchInput">User Id:</label>
-    <input required type="number" id="searchInput" name="userid" placeholder="Enter User Id">
-    <button type="submit">Search</button>
-</form>
 
-<table>
-    <thead>
-        <tr>
-            <th>User ID</th>
-            <th>full name</th>
-            <th>points</th>
-            <th>reduce points by</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in all_user  %}
-        <tr>
-            <td>{{ user.userid }}</td>
-            <td>{{ user.fullname }}</td>
-            <td>{{ user.points }}</td>
-            <td>
-            <form  method="POST" action="{{ url_for('reduce_point') }}" >
-                <input type="hidden" name="userid" value="{{ user.userid }}">
-                <input type="number" name="points" required placeholder="Take points">
-                <button type="submit">Reduce</button>
-            </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div style="text-align: center;">
+    <h1 style="margin: 10px;">Users list</h1>
+    <form method="POST" action="{{ url_for('search_user') }}">
+        <div style="margin-inline: 10px;">
+            <label for="searchInput" class="form-control-label" style="font-size: large;">User Id:</label>
+            <input required type="number" id="searchInput" style="display: inline-block; width: 30%;" class="form-control" name="userid"
+                placeholder="Enter User Id">
+            <button type="submit" class="btn btn-primary" style="display: inline-block; margin: 15px; margin-bottom: 20px;">Search</button>
+        </div>
+    </form>
+</div>
+    
 
+<div class="container mt-4">
+    <table class="table table-dark table-striped table-hover table-bordered border-secondary" >
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>full name</th>
+                <th>points</th>
+                <th style="width: 50%;">reduce points by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in all_user %}
+            <tr>
+                <td>{{ user.userid }}</td>
+                <td>{{ user.fullname }}</td>
+                <td>{{ user.points }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('reduce_point') }}">
+                        <input type="hidden" name="userid" value="{{ user.userid }}">
+                        <input type="number" name="points" required placeholder="Take points" class="form-control" style="display: inline-block; width: 40%;">
+                        <button type="submit" class="btnn">Reduce</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
 {% endblock %}

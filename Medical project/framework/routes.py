@@ -15,6 +15,7 @@ def load_user(user_id):
     return pharma_user
 '''
 
+
 @app.route('/')
 @app.route('/login_users', methods=['POST', 'GET'])
 def login_users():
@@ -37,6 +38,7 @@ def login_users():
         return redirect(url_for("login_users"))
     return render_template('login_users.html', login_form=form1, register_form=form2)
 
+
 @app.route('/home')
 @login_required
 def home():
@@ -48,15 +50,17 @@ def home():
         return render_template('home.html', user=current_user, pharmacies=pharmacies)
     return render_template('home.html', user=current_user)
 
+
 @app.route('/profile_page')
 @login_required
 def profile_page():
-    if current_user.is_pharma: 
+    if current_user.is_pharma:
         return redirect(url_for("pharma_profile_page"))
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
     pharmacount = pharmacy.query.filter_by(
         pincode=current_user.pincode).count()
     return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount)
+
 
 @app.route('/pharma_profile_page')
 @login_required
@@ -72,6 +76,7 @@ def view_image():
 
     # Redirect the user to the image URL
     return redirect(image_path)
+
 
 @app.route('/donate', methods=["POST", "GET"])
 @login_required
@@ -111,31 +116,33 @@ def donate():
     return render_template('donate.html', form=form, user=current_user)
 
 
-@app.route('/search_user',methods=["POST","GET"])
+@app.route('/search_user', methods=["POST", "GET"])
 @login_required
 def search_user():
-    userid=request.form.get("userid")
-    all_users=users.query.filter_by(userid=userid)
-    count=users.query.filter_by(userid=userid).count()
-    if count==0:
+    userid = request.form.get("userid")
+    all_users = users.query.filter_by(userid=userid)
+    count = users.query.filter_by(userid=userid).count()
+    if count == 0:
         flash("User not find", "danger")
-    return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
+    return render_template('pharma_user.html', current_user=current_user, all_user=all_users)
 
-@app.route('/reduce_point',methods=["POST","GET"])
+
+@app.route('/reduce_point', methods=["POST", "GET"])
 @login_required
 def reduce_point():
-    userid=request.form.get("userid")
-    user=users.query.get(userid)
-    rpoints=int(request.form.get("points"))
+    userid = request.form.get("userid")
+    user = users.query.get(userid)
+    rpoints = int(request.form.get("points"))
     if user.points >= rpoints:
-        final=user.points-rpoints
-        user.points=final
+        final = user.points-rpoints
+        user.points = final
         db.session.commit()
         flash("Points reduced", "success")
     else:
         flash("cannot be reduced", "danger")
-    all_users=users.query.filter_by(userid=userid)
-    return render_template('pharma_user.html', current_user=current_user,all_user=all_users)
+    all_users = users.query.filter_by(userid=userid)
+    return render_template('pharma_user.html', current_user=current_user, all_user=all_users)
+
 
 @app.route('/pharma_home')
 @login_required
@@ -144,17 +151,20 @@ def pharma_home():
         pharmaid=current_user.get_id())
     return render_template('pharma_home.html', current_user=current_user, all_request=all_request, MED_UPLOAD_FOLDER=MED_UPLOAD_FOLDER, PRE_UPLOAD_FOLDER=PRE_UPLOAD_FOLDER)
 
+
 @app.route('/request_his')
 @login_required
 def request_his():
-    all_request = medicine_request_pool.query.filter_by(userid=current_user.get_id())
+    all_request = medicine_request_pool.query.filter_by(
+        userid=current_user.get_id())
     return render_template('request_his.html', current_user=current_user, all_request=all_request)
+
 
 @app.route('/pharma_user')
 @login_required
 def pharma_user():
-    all_user=users.query.all()
-    return render_template('pharma_user.html', current_user=current_user,all_user=all_user)
+    all_user = users.query.all()
+    return render_template('pharma_user.html', current_user=current_user, all_user=all_user)
 
 
 '''@app.route('/test')
@@ -173,13 +183,13 @@ def logout():
 @login_required
 def add_points():
     if request.method == 'POST':
-        userid=request.form.get("userid")
-        request_id=request.form.get("request_id")
-        request_points=request.form.get("user_points")
-        current_request=medicine_request_pool.query.get(request_id)
-        current_request.points_given=request_points
-        user=users.query.get(userid)
-        user.points=request_points
+        userid = request.form.get("userid")
+        request_id = request.form.get("request_id")
+        request_points = request.form.get("user_points")
+        current_request = medicine_request_pool.query.get(request_id)
+        current_request.points_given = request_points
+        user = users.query.get(userid)
+        user.points = request_points
         redirect_url = request.form.get('redirect_url')
         db.session.commit()
     return redirect(redirect_url)
@@ -233,7 +243,6 @@ def register_user():
         return redirect(url_for("home"))
     # Pass only register_form to the template
     return render_template('login_users.html', login_form=form1, register_form=form2)
-
 
 
 @app.route('/med_return', methods=['GET', 'POST'])
