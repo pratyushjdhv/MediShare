@@ -75,7 +75,7 @@ class pharmacy(db.Model, UserMixin):
     """
     pharmaid = db.Column(db.Integer, autoincrement=True, primary_key=True)
     license_no = db.Column(db.String(12))
-    username = db.Column(db.String(65))
+    pharmacy_name = db.Column(db.String(65))
     pincode = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(320), nullable=False)
     hashed_password = db.Column(db.String(length=65), nullable=False)

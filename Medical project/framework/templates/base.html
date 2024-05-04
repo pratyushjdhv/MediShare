@@ -85,6 +85,7 @@
                             </div>
                         </li>
                     {% endif %}
+                    {% if not current_user.is_pharma %}x
                     <li class="nav-item">
                         <div style="text-align: center;">
                             <a class="nav-link" style="display: block; color:#87CEFA;"
@@ -94,6 +95,7 @@
                             </a>
                         </div>
                     </li>
+                    {% endif %}
 
                 </ul>
             </div>
@@ -101,7 +103,7 @@
 
             {% if current_user.is_authenticated %}            
                 <ul class="navbar-nav me-auto">
-                    {% if not current_user.is_pharma %}
+                    {% if current_user.license_no %}
                     <li class="nav-item">
                         <div style="text-align: center;">
                             <a class="nav-link text">
@@ -119,7 +121,6 @@
                             </div>
                         </div>
                     </li>
-                {% endif %}
 
 
             

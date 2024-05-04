@@ -43,12 +43,11 @@ def login_users():
 @login_required
 def home():
     if current_user.is_pharma:
-        print("this is lulli")
         return redirect(url_for("pharma_home"))
     if current_user.is_authenticated and current_user.pincode:
         pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
         return render_template('home.html', user=current_user, pharmacies=pharmacies)
-    return render_template('home.html', user=current_user)
+    return render_template('home.html', current_user=current_user)
 
 
 @app.route('/profile_page')
@@ -57,15 +56,14 @@ def profile_page():
     if current_user.is_pharma:
         return redirect(url_for("pharma_profile_page"))
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
-    pharmacount = pharmacy.query.filter_by(
-        pincode=current_user.pincode).count()
-    return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount)
+    pharmacount = pharmacy.query.filter_by(pincode=current_user.pincode).count()
+    return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount,current_user=current_user)
 
 
 @app.route('/pharma_profile_page')
 @login_required
 def pharma_profile_page():
-    return render_template('pharma_profile_page.html', user=current_user)
+    return render_template('pharma_profile_page.html', current_user=current_user,user=current_user)
 
 
 @app.route('/view_image', methods=['POST'])
@@ -113,7 +111,7 @@ def donate():
         equip_image_path = os.path.join(EQU_UPLOAD_FOLDER, img_name1)
         equip_image.save(equip_image_path)
         flash("This is done", "success")
-    return render_template('donate.html', form=form, user=current_user)
+    return render_template('donate.html', form=form, user=current_user,current_user=current_user)
 
 
 @app.route('/search_user', methods=["POST", "GET"])
@@ -176,7 +174,7 @@ def test():
 def logout():
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('login_users'))
 
 
 @app.route("/add_points", methods=["POST"])
@@ -263,7 +261,7 @@ def med_return():
 
         if existing_request:
             flash("Request already exists", "danger")
-            return render_template('med_return.html', form=form)
+            return render_template('med_return.html', form=form,current_user=current_user)
 
         # Extract multiple medications from form and join them into a single string
         medications_str = ', '.join(request.form.getlist('meds'))
@@ -301,7 +299,7 @@ def register_pharma():
     form2 = register_pharma_form()  # Use register_user_form here
     if form2.validate_on_submit():
         create_user = pharmacy(
-            username=form2.username.data,
+            pharmacy_name=form2.username.data,
             license_no=form2.license_no.data,
             email=form2.email.data,
             password=form2.password.data,
@@ -332,8 +330,7 @@ def login_pharma():
         if user:
             if user.check_password(password):
                 login_user(user)
-                flash(f'Pharamcy Account created successfully! You are now logged in as {
-                      user.username} ', category='success')
+                flash(f'Pharmacy Account created successfully! You are now logged in as {user.pharmacy_name}', category='success')
                 return redirect(url_for("pharma_home"))
             else:
                 flash("Wrong password", "danger")
