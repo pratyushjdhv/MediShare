@@ -9,7 +9,7 @@ import os
 @login_manager.user_loader
 def load_user(user_id):
     if user:
-        user = users.query.get(int(user_id))    
+        user = users.query.get(int(user_id))
         return user
     pharma_user = pharmacy.query.get(int(user_id))
     return pharma_user
@@ -25,15 +25,17 @@ def login_users():
         email = form1.email.data
         password = form1.password.data
         user = users.query.filter_by(email=email).first()
-        if user:
-            if user.check_password(password):
-                login_user(user)
-                flash(f'Account created successfully! You are now logged in as {
-                      user.username} ', category='success')
-                return redirect(url_for("home"))
-            else:
-                flash("Wrong password", "danger")
-                return redirect(url_for("login_users"))
+        if user and user.check_password(password):
+            print("Logging in user:", user) # Debugging print
+            login_user(user)
+            print("Current user after login:", current_user) # Debugging print
+
+            flash(f'Account created successfully! You are now logged in as {
+                  user.username} ', category='success')
+            return redirect(url_for("home"))
+        else:
+            flash("Wrong password", "danger")
+            return redirect(url_for("login_users"))
         flash("User doesn't exist", "danger")
         return redirect(url_for("login_users"))
     return render_template('login_users.html', login_form=form1, register_form=form2)
@@ -56,14 +58,15 @@ def profile_page():
     if current_user.is_pharma:
         return redirect(url_for("pharma_profile_page"))
     pharmacies = pharmacy.query.filter_by(pincode=current_user.pincode)
-    pharmacount = pharmacy.query.filter_by(pincode=current_user.pincode).count()
-    return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount,current_user=current_user)
+    pharmacount = pharmacy.query.filter_by(
+        pincode=current_user.pincode).count()
+    return render_template('profile_page.html', user=current_user, pharmacies=pharmacies, pharmacount=pharmacount, current_user=current_user)
 
 
 @app.route('/pharma_profile_page')
 @login_required
 def pharma_profile_page():
-    return render_template('pharma_profile_page.html', current_user=current_user,user=current_user)
+    return render_template('pharma_profile_page.html', current_user=current_user, user=current_user)
 
 
 @app.route('/view_image', methods=['POST'])
@@ -111,7 +114,7 @@ def donate():
         equip_image_path = os.path.join(EQU_UPLOAD_FOLDER, img_name1)
         equip_image.save(equip_image_path)
         flash("This is done", "success")
-    return render_template('donate.html', form=form, user=current_user,current_user=current_user)
+    return render_template('donate.html', form=form, user=current_user, current_user=current_user)
 
 
 @app.route('/search_user', methods=["POST", "GET"])
@@ -167,12 +170,14 @@ def pharma_user():
 
 '''@app.route('/test')
 def test():
-    return f"Current user: {current_user.username}'''
+    return f"Current user: {current_user.username}"'''
 
 
 @app.route('/logout')
 def logout():
+    print("Logging out current user:", current_user) # Debugging print
     logout_user()
+    print("Current user after logout:", current_user) # Debugging print
     flash('You have been logged out.', 'success')
     return redirect(url_for('login_users'))
 
@@ -234,7 +239,7 @@ def register_user():
         user = users.query.filter_by(email=create_user.email).first()
         if user:
             flash("account already exists", "general")
-            return redirect(url_for("login_user"))  # Correct the redirect URL
+            return redirect(url_for("login_users"))  # Correct the redirect URL
         db.session.add(create_user)
         db.session.commit()
         login_user(create_user)
@@ -261,7 +266,7 @@ def med_return():
 
         if existing_request:
             flash("Request already exists", "danger")
-            return render_template('med_return.html', form=form,current_user=current_user)
+            return render_template('med_return.html', form=form, current_user=current_user)
 
         # Extract multiple medications from form and join them into a single string
         medications_str = ', '.join(request.form.getlist('meds'))
@@ -330,7 +335,8 @@ def login_pharma():
         if user:
             if user.check_password(password):
                 login_user(user)
-                flash(f'Pharmacy Account created successfully! You are now logged in as {user.pharmacy_name}', category='success')
+                flash(f'Pharmacy Account created successfully! You are now logged in as {
+                      user.pharmacy_name}', category='success')
                 return redirect(url_for("pharma_home"))
             else:
                 flash("Wrong password", "danger")

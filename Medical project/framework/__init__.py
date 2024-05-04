@@ -44,7 +44,7 @@ def load_user(user_id):
 @login_manager.user_loader
 def load_user(user_id):
     # Convert user_id back to integer since it's stored as an integer in the database
-    user_id = (user_id)
+    user_id = int(user_id)
     user = users.query.get(user_id)
     if user:        
         return user
